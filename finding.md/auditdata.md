@@ -16,20 +16,20 @@ make anvil
 ```make deploy```
 
 3. Run the storage tool
-```cast storage <Address of the contract> 1 --rpc-url http://127.0.0.1:8545  
+```cast storage <Address of the contract> 1 --rpc-url http://127.0.0.1:8545  ```
 You'll get an output that looks like this 
 
 `0x506c6179626f690000000000000000000000000000000000000000000000000e`
 You can then parse a hex to a string with 
 
-```cast parse-bytes32-string 0x506c6179626f690000000000000000000000000000000000000000000000000e````
+cast parse-bytes32-string 0x506c6179626f690000000000000000000000000000000000000000000000000e````
 you would get an output like: 
 Playboi
 
 
 **Recommended Mitigation:** Due to this, the overall architecture of the contract should be rethought. One could encrypt the passwprd offchain, and then store the encrypted password onchain.This would require the user to remember another password offchain to decrypt the password. However, you'd also likely want to remove the view function as you wouldnt want the user to accidentally send a tx with the password to decrypt your password. 
 
-### [S-#] `PasswordStore::setPassword` has no access controls, meaning a non-owner could change the password. 
+### [S-2] `PasswordStore::setPassword` has no access controls, meaning a non-owner could change the password. 
 
 **Description:** The `PasswordStore::setPassword` function is set be an `external` function, however the natspec of the function & overall purpose of the smart contract is that this function allows only the owner to set a new password.
 
